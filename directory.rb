@@ -14,14 +14,21 @@ students = [
   "Norman Bates"
 ]
 
-#and now we print them out
-
-puts "The students of Villains Academy"
-puts "-------------"
-#iteration, each element of the array is assigned to 'student' and the code
-#between do and end is executed
-students.each do |student|
-  puts student
+def print_header
+  puts "The students of Villains Academy"
+  puts "-------------"
 end
-#finally, we print the total number of students
-puts "Overall, we have #{students.count} great students!"
+
+def print(names)
+  names.each do |names|
+    puts names
+  end
+end
+
+def print_footer(names)
+  puts "Overall, we have #{names.count} great students!"
+end
+
+print_header
+print(students)
+print_footer(students)
