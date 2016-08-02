@@ -17,7 +17,11 @@ def input_students
   while !name.empty? do
     #add the student hash to the array
     students << {name: name, cohort: :november, location: location, height: height, age: age}
-    puts "Now we have #{students.count} people enrolled".center(100)
+    if students.count < 2
+      puts "Now we have #{students.count} student".center(100)
+    else
+      puts "Now we have #{students.count} students".center(100)
+    end
     #get another name from the user
     puts
     puts "Add an additional student, in the same order, or hit return 4 times to exit".center(100)
