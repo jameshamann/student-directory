@@ -19,14 +19,11 @@ def input_students
     students << {name: name, cohort: :november, location: location, height: height, age: age}
     puts "Now we have #{students.count} people enrolled".center(100)
     #get another name from the user
-    puts "And the same again".center(100)
-    puts 'Please enter your first and last name'.center(100)
+    puts
+    puts "Add an additional student, in the same order, or hit return 4 times to exit".center(100)
     name = gets.chomp
-    puts 'Awesome! Now what is your approximate height (in meters, using numbers)'.center(100)
     height = gets.chomp
-    puts 'Nice! Please enter your age (again, using numbers please)'.center(100)
     age = gets.chomp
-    puts 'Great! Where were you born?'.center(100)
     location = gets.chomp
   end
   students
