@@ -1,12 +1,14 @@
 def input_students
-  puts "Please enter the name, birth place, height and age of the students".center(100)
-  puts "To finish, just simply hit return 4 times".center(100)
+  puts "Please enter the name, birth place, height, age and the cohort the student will be joining".center(100)
+  puts "To finish, just simply hit return 5 times".center(100)
   #create an empty array
   students = []
   #ask for the first name
   puts
   puts 'Please enter your first and last name'.center(100)
   name = gets.chomp
+  puts "Nice to meet you, #{name}! What cohort are you joining?".center(100)
+  cohort = gets.chomp.downcase.to_sym
   puts 'Awesome! Now what is your approximate height (in meters, using numbers)'.center(100)
   height = gets.chomp
   puts 'Nice! Please enter your age (again, using numbers please)'.center(100)
@@ -14,9 +16,9 @@ def input_students
   puts 'Great! Where were you born?'.center(100)
   location = gets.chomp
   #while the name is not empty, do this code:
-  while !name.empty? do
+  while !name.empty? || !cohort.empty? do
     #add the student hash to the array
-    students << {name: name, cohort: :november, location: location, height: height, age: age}
+    students << {name: name, cohort: cohort , height: height, age: age, location: location}
     if students.count < 2
       puts "Now we have #{students.count} student".center(100)
     else
@@ -24,11 +26,12 @@ def input_students
     end
     #get another name from the user
     puts
-    puts "Add an additional student, in the same order, or hit return 4 times to exit".center(100)
+    puts "Add an additional student, in the same order, or hit return 5 times to exit".center(100)
     name = gets.chomp
     height = gets.chomp
     age = gets.chomp
     location = gets.chomp
+    cohort = gets.chomp.downcase.to_sym
   end
   students
 end
@@ -39,7 +42,7 @@ def print_header
 end
 
 def print(students)
-  students.each_with_index {|student, index| puts "#{index} : #{student[:name]} , #{student[:height]} meters , #{student[:age]} years of age, born in #{student[:location]} , (#{student[:cohort]} cohort)".center(100)}
+  students.each_with_index {|student, index| puts "#{index + 1} : #{student[:name]} , #{student[:cohort]} , #{student[:height]} meters , #{student[:age]} years of age, born in #{student[:location]}.".center(100)}
 end
 
 
