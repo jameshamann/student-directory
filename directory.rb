@@ -6,15 +6,15 @@ def input_students
   #ask for the first name
   puts
   puts 'Please enter your first and last name'.center(100)
-  name = gets.chomp
+  name = gets.gsub(/[\n]/, '')
   puts "Nice to meet you, #{name}! What cohort are you joining?".center(100)
-  cohort = gets.chomp.downcase.to_sym
+  cohort = gets.gsub(/[\n]/, '').to_sym
   puts 'Awesome! Now what is your approximate height (in meters, using numbers)'.center(100)
-  height = gets.chomp
+  height = gets.gsub(/[\n]/, '')
   puts 'Nice! Please enter your age (again, using numbers please)'.center(100)
-  age = gets.chomp
+  age = gets.chop
   puts 'Great! Where were you born?'.center(100)
-  location = gets.chomp
+  location = gets.gsub(/[\n]/, '')
   #while the name is not empty, do this code:
   while !name.empty? || !cohort.empty? do
     #add the student hash to the array
@@ -27,11 +27,11 @@ def input_students
     #get another name from the user
     puts
     puts "Add an additional student, in the same order, or hit return 5 times to exit".center(100)
-    name = gets.chomp
-    height = gets.chomp
-    age = gets.chomp
-    location = gets.chomp
-    cohort = gets.chomp.downcase.to_sym
+    name = gets.gsub(/[\n]/, '')
+    height = gets.gsub(/[\n]/, '')
+    age = gets.gsub(/[\n]/, '')
+    location = gets.gsub(/[\n]/, '')
+    cohort = gets.gsub(/[\n]/, '').to_sym
   end
   students
 end
