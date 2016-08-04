@@ -6,15 +6,15 @@ def input_students
   #ask for the first name
   puts
   puts 'Please enter your first and last name'.center(100)
-  name = gets.gsub(/[\n]/, '')
+  name = gets.chomp
   puts "Nice to meet you, #{name}! What cohort are you joining?".center(100)
-  cohort = gets.gsub(/[\n]/, '').to_sym
+  cohort = gets.chomp.downcase.to_sym
   puts 'Awesome! Now what is your approximate height (in meters, using numbers)'.center(100)
-  height = gets.gsub(/[\n]/, '')
+  height = gets.chomp
   puts 'Nice! Please enter your age (again, using numbers please)'.center(100)
-  age = gets.chop
+  age = gets.chomp
   puts 'Great! Where were you born?'.center(100)
-  location = gets.gsub(/[\n]/, '')
+  location = gets.chomp
   #while the name is not empty, do this code:
   while !name.empty? || !cohort.empty? do
     #add the student hash to the array
@@ -27,14 +27,15 @@ def input_students
     #get another name from the user
     puts
     puts "Add an additional student, in the same order, or hit return 5 times to exit".center(100)
-    name = gets.gsub(/[\n]/, '')
-    height = gets.gsub(/[\n]/, '')
-    age = gets.gsub(/[\n]/, '')
-    location = gets.gsub(/[\n]/, '')
-    cohort = gets.gsub(/[\n]/, '').to_sym
+    name = gets.chomp
+    height = gets.chomp
+    age = gets.chomp
+    location = gets.chomp
+    cohort = gets.chomp.downcase.to_sym
   end
   students
 end
+
 
 def print_header
   puts "The students of Villains Academy".center(100)
@@ -42,12 +43,18 @@ def print_header
 end
 
 def print(students)
-  students.each_with_index {|student, index| puts "#{index + 1} : #{student[:name]} , #{student[:cohort]} , #{student[:height]} meters , #{student[:age]} years of age, born in #{student[:location]}.".center(100)}
+  if students.empty?
+    puts "There are no students in this directory"
+  else
+    students.each_with_index {|student, index| puts "#{index + 1} : #{student[:name]} , #{student[:cohort]} , #{student[:height]} meters , #{student[:age]} years of age, born in #{student[:location]}.".center(100)}
+  end
 end
 
 
 def print_footer(students)
-  if students.count < 2
+  if students.empty?
+
+  elsif students.count < 2
   puts
   puts "Overall, we have #{students.count} great student!".center(100)
   else
