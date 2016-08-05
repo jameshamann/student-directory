@@ -6,9 +6,9 @@ def input_students
   #ask for the first name
   puts
   puts 'Please enter your first and last name'.center(100)
-  name = gets.chomp
+  name = STDIN.gets.chomp
   puts "Nice to meet you, #{name}! What cohort are you joining?".center(100)
-  cohort = gets.chomp.to_sym
+  cohort = STDIN.gets.chomp.to_sym
   #while the name is not empty, do this code:
   while !name.empty? || !cohort.empty? do
     #add the student hash to the array
@@ -21,15 +21,32 @@ def input_students
     #get another name from the user
     puts
     puts "Add an additional student or hit return twice to return to the menu".center(100)
-    name = gets.chomp
-    cohort = gets.chomp.to_sym
+    name = STDIN.gets.chomp
+    cohort = STDIN.gets.chomp.to_sym
     end
 end
 
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
+  end
+end
+
+def process(selection)
+  case selection
+    when "1"
+      input_students
+    when "2"
+      show_students
+    when "3"
+      save_students
+    when "4"
+      load_students
+    when "9"
+      exit
+    else
+      puts "I don't understand that, please try again."
   end
 end
 
@@ -73,23 +90,6 @@ def show_students
   print_footer
 end
 
-def process(selection)
-  case selection
-    when "1"
-      input_students
-    when "2"
-      show_students
-    when "3"
-      save_students
-    when "4"
-      load_students
-    when "9"
-      exit
-    else
-      puts "I don't understand that, please try again."
-  end
-end
-
 def save_students
   #open file for writing
   file = File.open("students.csv", "w")
@@ -102,13 +102,25 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
   end
   file.close
+end
+
+def try_load_students
+  filename = ARGV.first #first argument from cl
+  return if filename.nil? #leave method if it is not given
+  if File.exists?(filename) #if the filename does exist:
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else #if the file doesn't exist
+    puts "Sorry, #{filename} doesn't exist."
+    Exit
+  end
 end
 
 interactive_menu
