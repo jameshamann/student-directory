@@ -1,6 +1,8 @@
 @students = []
 
-
+def adding_info
+  @students << {name: @name, cohort: @cohort}
+end
 
 def input_students
   puts "Please enter the name and the cohort the student will be joining".center(100)
@@ -8,13 +10,13 @@ def input_students
   #ask for the first name
   puts
   puts 'Please enter your first and last name'.center(100)
-  name = STDIN.gets.chomp
-  puts "Nice to meet you, #{name}! What cohort are you joining?".center(100)
-  cohort = STDIN.gets.chomp.to_sym
+  @name = STDIN.gets.chomp
+  puts "Nice to meet you, #{@name}! What cohort are you joining?".center(100)
+  @cohort = STDIN.gets.chomp.to_sym
   #while the name is not empty, do this code:
-  while !name.empty? || !cohort.empty? do
+  while !@name.empty? || !@cohort.empty? do
     #add the student hash to the array
-    @students << {name: name, cohort: cohort}
+    adding_info
     if @students.count < 2
       puts "Now we have #{@students.count} student".center(100)
     else
@@ -23,8 +25,8 @@ def input_students
     #get another name from the user
     puts
     puts "Add an additional student or hit return twice to return to the menu".center(100)
-    name = STDIN.gets.chomp
-    cohort = STDIN.gets.chomp.to_sym
+    @name = STDIN.gets.chomp
+    @cohort = STDIN.gets.chomp.to_sym
     end
 end
 
@@ -119,7 +121,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    adding_info
   end
   file.close
 end
