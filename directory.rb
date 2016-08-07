@@ -116,23 +116,21 @@ end
 
 def save_students
   #open file for writing
-  file = File.open(@new_file, "w")
-  #iterate over students array
-  @students.each do |student|
+  File.open(@new_file, "w") do |file|
+    student_list = @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(',')
     file.puts csv_line
+    end
+    file.write(student_list)
   end
-  file.close
 end
 
 def read_students(filename)
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
+  File.open(filename).readlines.each do |line|
   name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
   end
-  file.close
 end
 
 
