@@ -61,13 +61,13 @@ def process(selection)
       show_students
     when "3"
       puts "You have chosen to save the list, please chose a filename"
-      filename = STDIN.gets.chomp
-      puts "Great, your new file is #{filename}"
+      @new_file = STDIN.gets.chomp
+      puts "Great, your new file is #{@new_file}"
       save_students
     when "4"
       puts "You have chosen to load the students, please enter the filename"
-      filename = STDIN.gets.chomp
-        puts "Great, your chosen file is #{filename}"
+      @new_file = STDIN.gets.chomp
+        puts "Great, your chosen file is #{@new_file}"
       load_students
     when "9"
       puts "You have chosen to exit the program, thanks for using the app!"
@@ -114,9 +114,9 @@ def show_students
   print_footer
 end
 
-def save_students(filename = "students.csv_line")
+def save_students
   #open file for writing
-  file = File.open(filename, "w")
+  file = File.open(@new_file, "w")
   #iterate over students array
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -126,7 +126,7 @@ def save_students(filename = "students.csv_line")
   file.close
 end
 
-def read_students(filename = "students.csv")
+def read_students(filename)
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
