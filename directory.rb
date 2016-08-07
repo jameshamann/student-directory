@@ -13,7 +13,7 @@ def input_students
   while !@name.empty? || !@cohort.empty? do
     #add the student hash to the array
     student_array
-    student_count
+    curr_student_count
     #get another name from the user
     puts
     puts "Add an additional student or hit return twice to return to the menu".center(100)
