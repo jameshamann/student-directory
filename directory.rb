@@ -1,11 +1,5 @@
 @students = []
 
-def adding_info
-  @students << {name: @name, cohort: @cohort}
-end
-
-
-
 def input_students
   puts "Please enter the name and the cohort the student will be joining".center(100)
   puts "To finish, just simply hit return 2 times".center(100)
@@ -18,18 +12,34 @@ def input_students
   #while the name is not empty, do this code:
   while !@name.empty? || !@cohort.empty? do
     #add the student hash to the array
-    adding_info
-    if @students.count < 2
-      puts "Now we have #{@students.count} student".center(100)
-    else
-      puts "Now we have #{@students.count} students".center(100)
-    end
+    student_array
+    student_count
     #get another name from the user
     puts
     puts "Add an additional student or hit return twice to return to the menu".center(100)
     @name = STDIN.gets.chomp
     @cohort = STDIN.gets.chomp.to_sym
     end
+end
+
+def student_array
+  @students << {name: @name, cohort: @cohort}
+end
+
+def curr_student_count
+  if @students.count < 2
+    puts "Now we have #{@students.count} student".center(100)
+  else
+    puts "Now we have #{@students.count} students".center(100)
+  end
+end
+
+def total_student_count
+    if @students.count < 2
+      puts "Overall, we have #{@students.count} great student!".center(100)
+    else
+      puts "Overall, we have #{@students.count} great students!".center(100)
+  end
 end
 
 def interactive_menu
@@ -85,13 +95,8 @@ end
 
 def print_footer
   if @students.empty?
-
-  elsif @students.count < 2
-  puts
-  puts "Overall, we have #{@students.count} great student!".center(100)
-  else
     puts
-    puts "Overall, we have #{@students.count} great students!".center(100)
+  else total_student_count
   end
 end
 
@@ -121,7 +126,7 @@ def save_students(filename = "students.csv_line")
   file.close
 end
 
-def load_students(filename = "students.csv")
+def read_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
@@ -131,15 +136,15 @@ def load_students(filename = "students.csv")
 end
 
 
-def try_load_students
+def load_students
   filename = ARGV.first || filename = "students.csv" # first argument from the command line
   if File.exists?(filename) # if it exists
+     read_students(filename)
      puts "Loaded #{@students.count} from #{filename}"
-     load_students(filename)
   else # if it doesn't exist
   File.open("students.csv" , "r") #load on startup by default
   end
 end
 
-try_load_students
+load_students
 interactive_menu
