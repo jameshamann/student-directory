@@ -1,3 +1,4 @@
+require 'csv'
 @students = []
 
 def input_students
@@ -88,7 +89,7 @@ def print_students_list
   if @students.empty?
     puts "There are no students in this directory".center(100)
   else
-    @students.each_with_index {|student, index| puts "#{index + 1} : #{student[:name]} , #{student[:cohort]} cohort.".center(100)}
+    @students.each_with_index {|student, index| puts "#{index + 1} :#{student[:name]} , #{student[:cohort]} cohort.".center(100)}
   end
 end
 
@@ -115,14 +116,12 @@ def show_students
 end
 
 def save_students
-  #open file for writing
-  File.open(@new_file, "w") do |file|
-    student_list = @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(',')
-    file.puts csv_line
+  student_list = @students.each do |student|
+  student_data = [student[:name], student[:cohort]]
+    CSV.open(@new_file, "wb") do |csv|
+      csv << @students
+
     end
-    file.write(student_list)
   end
 end
 
@@ -135,12 +134,14 @@ end
 
 
 def load_students
-  filename = ARGV.first || filename = "students.csv" # first argument from the command line
-  if File.exists?(filename) # if it exists
-     read_students(filename)
-     puts "Loaded #{@students.count} from #{filename}"
+  @new_file = ARGV.first || @new_file = "students.csv" # first argument from the command line
+  if File.exists?(@new_file) # if it exists
+     read_students(@new_file)
+     puts "Loaded #{@students.count} from #{@new_file}"
   else # if it doesn't exist
-  File.open("students.csv" , "r") #load on startup by default
+  puts 'I\'m sorry that file doesn\'t exist, the default file \'students.csv\' has been loaded'
+  read_students("students.csv") #load on startup by default
+  puts "Loaded #{@students.count} from \'students.csv\'"
   end
 end
 
